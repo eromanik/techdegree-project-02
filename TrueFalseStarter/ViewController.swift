@@ -6,7 +6,7 @@
 //  Copyright © 2016 Treehouse. All rights reserved.
 //
 
-// comment for initial commit
+// comment for first commit
 
 import UIKit
 import GameKit
