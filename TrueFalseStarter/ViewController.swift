@@ -14,7 +14,7 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
-    let questionsPerRound = 4
+    let questionsPerRound = 2
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         ["Question": "Camels are cannibalistic", "Answer": "False"],
         ["Question": "All ducks are birds", "Answer": "True"]
     ]
+
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var trueButton: UIButton!
@@ -48,11 +49,18 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
+        let nextQuestion = getNextQuestion()
+        questionField.text = nextQuestion.question
+        playAgainButton.isHidden = true
+    }
+    
+    /*func displayQuestion() {
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
         let questionDictionary = trivia[indexOfSelectedQuestion]
         questionField.text = questionDictionary["Question"]
         playAgainButton.isHidden = true
     }
+    */
     
     func displayScore() {
         // Hide the answer buttons
