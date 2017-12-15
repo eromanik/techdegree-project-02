@@ -37,7 +37,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Correct/Incorrect Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZt-Ga-0hM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct/Incorrect Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZt-Ga-0hM">
                                 <rect key="frame" x="36" y="110" width="303" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ZGk-bA-cnq"/>
@@ -156,7 +156,9 @@
                             <constraint firstItem="FZt-Ga-0hM" firstAttribute="top" secondItem="I3V-ih-1Ky" secondAttribute="bottom" constant="30" id="D3i-f7-NIC"/>
                             <constraint firstItem="gw5-yN-4dA" firstAttribute="top" secondItem="FZt-Ga-0hM" secondAttribute="bottom" constant="8" id="HVv-G5-18b"/>
                             <constraint firstItem="gw5-yN-4dA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="KTL-k8-o4B"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FZt-Ga-0hM" secondAttribute="trailing" constant="20" id="QEA-Wd-AS9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="I3V-ih-1Ky" secondAttribute="trailing" constant="20" id="ezv-2n-s4D"/>
+                            <constraint firstItem="FZt-Ga-0hM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="ohZ-Hv-1fg"/>
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="vbM-hv-N1T"/>
                         </constraints>
                     </view>
@@ -166,6 +168,7 @@
                         <outlet property="answer2Button" destination="AS4-HX-g9f" id="Lsn-P3-bfi"/>
                         <outlet property="answer3Button" destination="td0-yv-z69" id="DpO-M9-3h7"/>
                         <outlet property="answer4Button" destination="7gn-8U-FNt" id="nji-vC-KOG"/>
+                        <outlet property="correctIncorrectMessage" destination="FZt-Ga-0hM" id="3zz-OD-R5c"/>
                         <outlet property="playAgainButton" destination="K17-uy-MvB" id="0Bx-Cm-ye0"/>
                         <outlet property="questionField" destination="I3V-ih-1Ky" id="7UI-o2-ATi"/>
                     </connections>

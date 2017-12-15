@@ -14,6 +14,6 @@ var indexOfSelectedQuestion: Int = 0
 func getNextQuestion() -> Question {
     indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: questions.count)
     let question = questions[indexOfSelectedQuestion]
-    questions.remove(at: indexOfSelectedQuestion)
+
     return question
 }

@@ -19,9 +19,10 @@ struct Question {
 // create array of questions
 
 let questionData: [Question] = [
-    Question(question: "This was the only US President to serve more than two consecutive terms.", answers: ["George Washington", "Franklin D. Roosevelt", "Woodrow Wilson", "Andrew Jackson"], correctAnswerIndex: 1, asked: false),
-    Question(question: "Which of the following countries has the most residents?", answers: ["Nigeria", "Russia", "Iran", "Vietnam"], correctAnswerIndex: 0, asked: false),
-    Question(question: "In what year was the United Nations founded?", answers: ["1918", "1919", "1945", "1954"], correctAnswerIndex: 2, asked: false)
+    Question(question: "Who played the guitar solo on the Beatles' \"While My Guitar Gently Weeps\"", answers: ["Jimi Hendrix", "George Harrison", "Eric Claption", "Jeff Beck"], correctAnswerIndex: 2, asked: false),
+    Question(question: "What songwriting duo is known as \"The Glimmer Twins\"", answers: ["Mick Jagger and Kieth Richards", "John Lennon and Paul McCartney", "Elton John and Bernie Taupin"], correctAnswerIndex: 0, asked: false),
+    Question(question: "In what year was the United Nations founded?", answers: ["1918", "1919", "1945", "1954"], correctAnswerIndex: 2, asked: false),
+    Question(question: "The Titanic departed from the United Kingdom, where was it supposed to arrive?", answers: ["Paris", "Washington, D.C", "New York City", "Boston"], correctAnswerIndex: 2, asked: false)
 ]
 
 var questions: [Question] = []
