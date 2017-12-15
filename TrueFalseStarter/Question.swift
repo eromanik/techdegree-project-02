@@ -13,10 +13,20 @@ struct Question {
     let answers: [String]
     let correctAnswerIndex: Int
     var asked: Bool = false
-    
+
 }
 
-let questions: [Question] = [
+// create array of questions
+
+let questionData: [Question] = [
     Question(question: "This was the only US President to serve more than two consecutive terms.", answers: ["George Washington", "Franklin D. Roosevelt", "Woodrow Wilson", "Andrew Jackson"], correctAnswerIndex: 1, asked: false),
     Question(question: "Which of the following countries has the most residents?", answers: ["Nigeria", "Russia", "Iran", "Vietnam"], correctAnswerIndex: 0, asked: false),
+    Question(question: "In what year was the United Nations founded?", answers: ["1918", "1919", "1945", "1954"], correctAnswerIndex: 2, asked: false)
 ]
+
+var questions: [Question] = []
+
+func initializeQuestions() {
+    questions = []
+    questions.append(contentsOf: questionData)
+}
