@@ -31,6 +31,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var answer3Button: UIButton!
     @IBOutlet weak var answer4Button: UIButton!
     
+    @IBOutlet weak var nextQuestion: UIButton!
+    
     @IBOutlet weak var playAgainButton: UIButton!
     
 
@@ -80,6 +82,7 @@ class ViewController: UIViewController {
             answer4Button.isHidden = true
         }
         playAgainButton.isHidden = true
+        nextQuestion.isHidden = true
     }
     
     func showCorrectAnswer(correctButton: UIButton) {
@@ -150,7 +153,14 @@ class ViewController: UIViewController {
             break
         }
         
-        loadNextRoundWithDelay(seconds: 2)
+        nextQuestion.isHidden = false
+        
+//        loadNextRoundWithDelay(seconds: 2)
+    }
+    
+    
+    @IBAction func nextQuestion(_ sender: Any) {
+        nextRound()
     }
     
     func nextRound() {

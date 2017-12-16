@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="top" axis="vertical" distribution="fillProportionally" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gw5-yN-4dA">
-                                <rect key="frame" x="36" y="180" width="303" height="409"/>
+                                <rect key="frame" x="36" y="180" width="303" height="499"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1V-MS-ECi">
                                         <rect key="frame" x="0.0" y="0.0" width="303" height="50"/>
@@ -112,8 +112,23 @@
                                             <action selector="checkAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qf1-Eb-YuF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K17-uy-MvB">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8F-A3-OoJ">
                                         <rect key="frame" x="0.0" y="359" width="303" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.57647058819999997" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Next Question"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="nextQuestion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E9r-cH-TgN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K17-uy-MvB">
+                                        <rect key="frame" x="0.0" y="449" width="303" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.57647058823529407" blue="0.52941176470588236" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -137,6 +152,7 @@
                                     <constraint firstItem="td0-yv-z69" firstAttribute="height" secondItem="J1V-MS-ECi" secondAttribute="height" id="PaV-x9-yV3"/>
                                     <constraint firstAttribute="trailing" secondItem="J1V-MS-ECi" secondAttribute="trailing" id="Tjk-Ku-aF9"/>
                                     <constraint firstAttribute="trailing" secondItem="AS4-HX-g9f" secondAttribute="trailing" id="Tql-k9-2x4"/>
+                                    <constraint firstItem="S8F-A3-OoJ" firstAttribute="height" secondItem="J1V-MS-ECi" secondAttribute="height" id="nhx-0B-K61"/>
                                     <constraint firstItem="7gn-8U-FNt" firstAttribute="height" secondItem="J1V-MS-ECi" secondAttribute="height" id="org-7H-k5p"/>
                                 </constraints>
                             </stackView>
@@ -177,6 +193,7 @@
                         <outlet property="answer4Button" destination="7gn-8U-FNt" id="nji-vC-KOG"/>
                         <outlet property="correctIncorrectMessage" destination="FZt-Ga-0hM" id="3zz-OD-R5c"/>
                         <outlet property="defaultButton" destination="xsa-w9-B9e" id="MlP-9A-8Wo"/>
+                        <outlet property="nextQuestion" destination="S8F-A3-OoJ" id="LOP-2s-K4a"/>
                         <outlet property="playAgainButton" destination="K17-uy-MvB" id="0Bx-Cm-ye0"/>
                         <outlet property="questionField" destination="I3V-ih-1Ky" id="7UI-o2-ATi"/>
                     </connections>
