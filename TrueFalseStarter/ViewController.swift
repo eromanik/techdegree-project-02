@@ -11,14 +11,19 @@
 import UIKit
 import GameKit
 import AudioToolbox
+
 var currentQuestion = Question(question: "", answers: [], correctAnswerIndex: 0)
+
 
 class ViewController: UIViewController {
     
     let questionsPerRound = 3
     var questionsAsked = 0
     var correctQuestions = 0
-
+    
+    var questionAnswered = false
+    
+    
     var gameSound: SystemSoundID = 0
     
     @IBOutlet weak var questionField: UILabel!
@@ -34,7 +39,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var nextQuestion: UIButton!
     
     @IBOutlet weak var playAgainButton: UIButton!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,9 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
+        //Start 15 second timer
+        resetTimer()
+        questionAnswered = false
         currentQuestion = getNextQuestion()
         questionField.text = currentQuestion.question
         answer1Button.backgroundColor = defaultButton.backgroundColor
@@ -112,6 +119,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
+        //Set question answered flag
+        questionAnswered = true
+        
         // Increment the questions asked counter
         questionsAsked += 1
         
@@ -139,25 +149,28 @@ class ViewController: UIViewController {
             correctIncorrectMessage.text = "Sorry, wrong answer!"
         }
         
-        
-        switch currentQuestion.correctAnswerIndex {
-        case 0:
-            showCorrectAnswer(correctButton: answer1Button)
-        case 1:
-            showCorrectAnswer(correctButton: answer2Button)
-        case 2:
-            showCorrectAnswer(correctButton: answer3Button)
-        case 3:
-            showCorrectAnswer(correctButton: answer4Button)
-        default:
-            break
-        }
-        
+    
+        showCorrectAnswer(correctButton: correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
+       
         nextQuestion.isHidden = false
         
 //        loadNextRoundWithDelay(seconds: 2)
     }
     
+    func correctAnswerButton(correctAnswerIndex: Int) -> UIButton {
+        switch currentQuestion.correctAnswerIndex {
+        case 0:
+            return answer1Button
+        case 1:
+            return answer2Button
+        case 2:
+            return answer3Button
+        case 3:
+            return answer4Button
+        default:
+            return answer1Button
+        }
+    }
     
     @IBAction func nextQuestion(_ sender: Any) {
         nextRound()
@@ -167,6 +180,7 @@ class ViewController: UIViewController {
         if questionsAsked == questionsPerRound {
             // Game is over
             correctIncorrectMessage.text = ""
+            nextQuestion.isHidden = true
             displayScore()
         } else {
             // Continue game
@@ -184,11 +198,36 @@ class ViewController: UIViewController {
         nextRound()
     }
     
-
-    
     // MARK: Helper Methods
     
-    func loadNextRoundWithDelay(seconds: Int) {
+    // Timeout for questions
+    
+    weak var timer: Timer?
+    
+    func resetTimer() {
+        timer?.invalidate()
+        timer = .scheduledTimer(timeInterval: 15.0, target: self, selector: #selector(handleIdleEvent(_:)), userInfo: nil, repeats: false)
+    }
+    
+    @objc func handleIdleEvent(_ timer: Timer) {
+        
+        if questionAnswered == false {
+            self.correctIncorrectMessage.textColor = UIColor.orange
+            self.correctIncorrectMessage.text = "Time's up!"
+            
+            self.showCorrectAnswer(correctButton: self.correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
+        
+            nextQuestion.isHidden = false
+        
+            questionAnswered = true
+            
+            // Increment the questions asked counter
+            questionsAsked += 1
+        }
+        
+    }
+    
+    func questionTimeout(seconds: Int) {
         // Converts a delay in seconds to nanoseconds as signed 64 bit integer
         let delay = Int64(NSEC_PER_SEC * UInt64(seconds))
         // Calculates a time value to execute the method given current time and delay
@@ -196,7 +235,11 @@ class ViewController: UIViewController {
         
         // Executes the nextRound method at the dispatch time on the main queue
         DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            self.nextRound()
+            
+            self.correctIncorrectMessage.textColor = UIColor.orange
+            self.correctIncorrectMessage.text = "Time's up!"
+            
+            self.showCorrectAnswer(correctButton: self.correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
         }
     }
     
