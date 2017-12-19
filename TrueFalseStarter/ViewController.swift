@@ -6,31 +6,33 @@
 //  Copyright © 2016 Treehouse. All rights reserved.
 //
 
-// comment for first commit
-
 import UIKit
 import GameKit
 import AudioToolbox
 
+// Empty variable to hold the current question during play
 var currentQuestion = Question(question: "", answers: [], correctAnswerIndex: 0)
-
 
 class ViewController: UIViewController {
     
-    let questionsPerRound = 3
+    let questionsPerRound = 4
     var questionsAsked = 0
     var correctQuestions = 0
-    
+
+    // Flag used by timer to indicate whether the player has answered the current question
     var questionAnswered = false
     
-    
     var gameSound: SystemSoundID = 0
+    var correctSound: SystemSoundID = 1
+    var wrongSound: SystemSoundID = 2
+   
+    // Hidden dummy button used only for getting default font and background colors
+    @IBOutlet weak var defaultButton: UIButton!
     
     @IBOutlet weak var questionField: UILabel!
 
-    @IBOutlet weak var defaultButton: UIButton!
-    
     @IBOutlet weak var correctIncorrectMessage: UILabel!
+    
     @IBOutlet weak var answer1Button: UIButton!
     @IBOutlet weak var answer2Button: UIButton!
     @IBOutlet weak var answer3Button: UIButton!
@@ -44,6 +46,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         correctIncorrectMessage.text = ""
         loadGameStartSound()
+        loadCorrectAnswerSound()
+        loadWrongAnswerSound()
         // Start game
         initializeQuestions()
         playGameStartSound()
@@ -60,7 +64,11 @@ class ViewController: UIViewController {
         resetTimer()
         questionAnswered = false
         currentQuestion = getNextQuestion()
+        
+        // Display the questions
         questionField.text = currentQuestion.question
+        
+        // Reset background and text for buttons to match the default button
         answer1Button.backgroundColor = defaultButton.backgroundColor
         answer1Button.setTitleColor(defaultButton.titleColor(for: .normal), for: .normal)
         answer2Button.backgroundColor = defaultButton.backgroundColor
@@ -70,11 +78,13 @@ class ViewController: UIViewController {
         answer4Button.backgroundColor = defaultButton.backgroundColor
         answer4Button.setTitleColor(defaultButton.titleColor(for: .normal), for: .normal)
         
+        // Display buttons and set answer text -- Always show the first 2 answer buttons because no question will have fewer than 2 questions
         answer1Button.isHidden = false
         answer1Button.setTitle(currentQuestion.answers[0], for: .normal)
         answer2Button.isHidden = false
         answer2Button.setTitle(currentQuestion.answers[1], for: .normal)
         
+        // Display third and fourth buttons and set answer text if needed
         if currentQuestion.answers.count > 2 {
             answer3Button.isHidden = false
             answer3Button.setTitle(currentQuestion.answers[2], for: .normal)
@@ -88,9 +98,12 @@ class ViewController: UIViewController {
         } else {
             answer4Button.isHidden = true
         }
+        
         playAgainButton.isHidden = true
         nextQuestion.isHidden = true
     }
+    
+    // Grey out incorrect answer buttons and highlight correct answer
     
     func showCorrectAnswer(correctButton: UIButton) {
         answer1Button.backgroundColor = UIColor.darkGray
@@ -119,13 +132,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
-        //Set question answered flag
+        //Set question answered flag for timer
         questionAnswered = true
         
         // Increment the questions asked counter
         questionsAsked += 1
         
         var selectedAnswer: Int
+        
+        // Translate selected button to index value to match the question struct property
         
         switch sender {
         case answer1Button:
@@ -144,17 +159,18 @@ class ViewController: UIViewController {
             correctQuestions += 1
             correctIncorrectMessage.textColor = UIColor.green
             correctIncorrectMessage.text = "Correct!"
+            playCorrectAnswerSound()
         } else {
             correctIncorrectMessage.textColor = UIColor.orange
             correctIncorrectMessage.text = "Sorry, wrong answer!"
+            playWrongAnswerSound()
         }
         
-    
         showCorrectAnswer(correctButton: correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
        
+        // Display the Next Question button
         nextQuestion.isHidden = false
         
-//        loadNextRoundWithDelay(seconds: 2)
     }
     
     func correctAnswerButton(correctAnswerIndex: Int) -> UIButton {
@@ -214,6 +230,7 @@ class ViewController: UIViewController {
         if questionAnswered == false {
             self.correctIncorrectMessage.textColor = UIColor.orange
             self.correctIncorrectMessage.text = "Time's up!"
+            self.playWrongAnswerSound()
             
             self.showCorrectAnswer(correctButton: self.correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
         
@@ -227,30 +244,34 @@ class ViewController: UIViewController {
         
     }
     
-    func questionTimeout(seconds: Int) {
-        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
-        let delay = Int64(NSEC_PER_SEC * UInt64(seconds))
-        // Calculates a time value to execute the method given current time and delay
-        let dispatchTime = DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)
-        
-        // Executes the nextRound method at the dispatch time on the main queue
-        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            
-            self.correctIncorrectMessage.textColor = UIColor.orange
-            self.correctIncorrectMessage.text = "Time's up!"
-            
-            self.showCorrectAnswer(correctButton: self.correctAnswerButton(correctAnswerIndex: currentQuestion.correctAnswerIndex))
-        }
-    }
-    
     func loadGameStartSound() {
         let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
         let soundURL = URL(fileURLWithPath: pathToSoundFile!)
         AudioServicesCreateSystemSoundID(soundURL as CFURL, &gameSound)
     }
     
+    func loadCorrectAnswerSound() {
+        let pathToSoundFile = Bundle.main.path(forResource: "cheer", ofType: "wav")
+        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &correctSound)
+    }
+    
+    func loadWrongAnswerSound() {
+        let pathToSoundFile = Bundle.main.path(forResource: "boo", ofType: "wav")
+        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &wrongSound)
+    }
+    
     func playGameStartSound() {
         AudioServicesPlaySystemSound(gameSound)
+    }
+    
+    func playCorrectAnswerSound() {
+        AudioServicesPlaySystemSound(correctSound)
+    }
+    
+    func playWrongAnswerSound() {
+        AudioServicesPlaySystemSound(wrongSound)
     }
 }
 
